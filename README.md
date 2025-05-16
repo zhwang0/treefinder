@@ -11,8 +11,6 @@ A flexible PyTorch pipeline for building, training, and evaluating remote‐sens
 - **Evaluation** of pixel‐level IoU, F1, precision, recall, accuracy under micro/macro averaging and “all” vs “positive_only” scenarios  
 - **Logging & results**: automatic log files, loss-curve plots, and YAML summaries  
 
----
-
 
 ## 🔍 Benchmark Models
 
