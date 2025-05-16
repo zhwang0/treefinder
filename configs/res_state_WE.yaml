@@ -1,0 +1,108 @@
+# debug.yaml
+
+# Experiment-wide settings
+experiment:
+  id: "111"                              # Unique experiment identifier
+  seed: 2020                           # Random seed for reproducibility
+  gpu_id: 0                            # GPU device to use (e.g. CUDA_VISIBLE_DEVICES)
+  num_workers: 40                      # Number of workers for data loading
+
+# Dataset and split configuration
+data:
+  root_dir: "datasets/"        # Base folder containing your .tif files
+  dataset_dir: "tiles224_v2/"
+  dataset_info: "tile_info224_v2.csv"
+  no_data_value: 255
+  normalize: true
+  augmentation:
+    random_flip: true
+    rotation:
+      type: "90"
+  split:
+    method: "by_state"                 # Options: random, by_state, east_west
+    pos_threshold: 0            # Threshold for positive class
+    pos_frac: 0.           # Fraction of positive samples in the dataset
+    random:
+      train_ratio: 0.8
+      train_val_ratio: 0.1            # Ratio of train to val in the training set
+      test_ratio: 0.2
+      shuffle_by_tile: true  # Shuffle files before splitting
+    by_state:
+      train_states: ['AR', 'AZ', 'CA', 'CO', 'IA', 'ID', 'KS', 'LA', 'MN', 'MO', 'MT', 'ND', 'NE', 'NM', 'NV', 'OK', 'OR', 'SD', 'TX', 'UT', 'WA', 'WY']
+      val_states:   []
+      test_states:  ['AL', 'CT', 'DE', 'FL', 'GA', 'IL', 'IN', 'KY', 'MA', 'MD', 'ME', 'MI', 'MS', 'NC', 'NH', 'NJ', 'NY', 'OH', 'PA', 'RI', 'SC', 'TN', 'VA', 'VT', 'WV', 'WI']
+      test_exclude_train: false  # test on ALL except train
+    by_climate:
+      train_climate: ['Cfa']
+      val_climate:   []
+      test_climate:  []
+      test_exclude_train: true  # test on ALL except train
+    by_tree_type:
+      train_tree_types: ['Maple - maple spp.']
+      val_tree_types:   []
+      test_tree_types:  ['Pine - pine spp.', 'Oak - oak spp']
+      test_exclude_train: false  # test on ALL except train
+
+
+# Model configuration
+model:
+  name: "vitseg"                 # [unet, deeplabv3, d3_tf, vitseg, segformer, dofa]
+  in_channels: 5                     
+  num_classes: 1
+  image_size: 224
+  pretrain_dir: "pretrained_weights/"  # Directory for pretrained weights
+  deeplab_pretrained:
+    pretrained: true
+    backbone: "resnet50"           # Backbone for DeepLabV3 (e.g. resnet50, resnet101)
+  vit_pretrained: 
+    vit_weights: "google/vit-base-patch16-224-in21k"  # Pretrained model for ViT
+    vit_patch_size: 16
+  segformer_pretrained: 
+    segformer_weights: "nvidia/segformer-b2-finetuned-ade-512-512"  # Pretrained model for SegFormer
+  mask2former_pretrained:
+    mask2former_weights: "facebook/mask2former-swin-tiny-ade-semantic"  # Pretrained model for Mask2Former
+  dofa_pretrained: 
+    dofa_weights: "dofa/DOFA_ViT_base_e100.pth"  # Pretrained model from github
+    dofa_wavelist: [0.65, 0.55, 0.45, 0.85] # Wavelengths for NAIP bands
+
+
+# Training hyperparameters
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 1e-4
+  optimizer:
+    type: "AdamW"
+    weight_decay: 0.01
+  criterion:
+    type: "BCEWithLogitsLoss"         # options: BCEWithLogitsLoss, FocalLoss
+    w_pos: 0                   # Weight for positive class in loss function
+    alpha: 0.25               # Focal loss alpha parameter
+    gamma: 2                 # Focal loss gamma parameter
+  w_dice: 1
+  scheduler:
+    type: "ExponentialLR"           # options: StepLR, ExponentialLR, CosineAnnealingWarmRestarts
+  early_stopping:
+    enabled: true                   # Enable early stopping
+    monitor: "val_loss"              # Metric to monitor for early stopping
+    mode: "min"                      # Mode for monitoring (min or max)
+    patience: 5                     # Number of epochs with no improvement after which training will be stopped
+
+# Evaluation settings
+evaluation:
+  metrics:
+    - iou
+    - precision
+    - recall
+    - f1
+    - accuracy 
+
+# Output directories
+output:
+  results_dir: "results/"               # Where to write final metrics (e.g. JSON, CSV)
+  checkpoint_dir: "checkpoints/"        # Where to save model weights
+
+# Logging configuration
+logging:
+  log_dir: "logs/"                     # Directory for logging
+  log_interval: 100                     # Log training status every N batches
