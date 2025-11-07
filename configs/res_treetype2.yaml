@@ -3,15 +3,15 @@
 # Experiment-wide settings
 experiment:
   id: "111"                              # Unique experiment identifier
-  seed: 2020                           # Random seed for reproducibility
+  seed: 2025                           # Random seed for reproducibility
   gpu_id: 0                            # GPU device to use (e.g. CUDA_VISIBLE_DEVICES)
   num_workers: 40                      # Number of workers for data loading
 
 # Dataset and split configuration
 data:
   root_dir: "datasets/"        # Base folder containing your .tif files
-  dataset_dir: "tiles224_v2/"
-  dataset_info: "tile_info224_v2.csv"
+  dataset_dir: "tiles224_v3/"
+  dataset_info: "tile_info224_v3.csv"
   no_data_value: 255
   normalize: true
   augmentation:
@@ -59,6 +59,8 @@ model:
     vit_patch_size: 16
   segformer_pretrained: 
     segformer_weights: "nvidia/segformer-b2-finetuned-ade-512-512"  # Pretrained model for SegFormer
+  mask2former_pretrained:
+    mask2former_weights: "facebook/mask2former-swin-tiny-ade-semantic"  # Pretrained model for Mask2Former
   dofa_pretrained: 
     dofa_weights: "dofa/DOFA_ViT_base_e100.pth"  # Pretrained model from github
     dofa_wavelist: [0.65, 0.55, 0.45, 0.85] # Wavelengths for NAIP bands

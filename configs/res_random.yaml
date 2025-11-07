@@ -3,15 +3,15 @@
 # Experiment-wide settings
 experiment:
   id: "111"                              # Unique experiment identifier
-  seed: 2020                           # Random seed for reproducibility
+  seed: 2025                           # Random seed for reproducibility
   gpu_id: 0                            # GPU device to use (e.g. CUDA_VISIBLE_DEVICES)
   num_workers: 40                      # Number of workers for data loading
 
 # Dataset and split configuration
 data:
   root_dir: "datasets/"        # Base folder containing your .tif files
-  dataset_dir: "tiles224_v2/"
-  dataset_info: "tile_info224_v2.csv"
+  dataset_dir: "tiles224_v3/"
+  dataset_info: "tile_info224_v3.csv"
   no_data_value: 255
   normalize: true
   augmentation:
@@ -61,7 +61,7 @@ model:
 training:
   epochs: 100
   batch_size: 32
-  learning_rate: 1e-4
+  learning_rate: 1e-5
   optimizer:
     type: "AdamW"
     weight_decay: 0.01

@@ -133,7 +133,7 @@ def evaluate_model(model, test_loader, cfg, exp_name):
         results['overall_accuracy'] = safe_div(stats['correct'], stats['total'])
 
     # Log and return
-    logger.info(f"Evaluation results:\n{yaml.dump(results, sort_keys=False)}")
+    logger.info(f"Evaluation results:\n{results}")
     return results
         
 

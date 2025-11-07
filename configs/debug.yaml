@@ -10,8 +10,8 @@ experiment:
 # Dataset and split configuration
 data:
   root_dir: "datasets/"        # Base folder containing your .tif files
-  dataset_dir: "tiles224_v2/"
-  dataset_info: "tile_info224_v2.csv"
+  dataset_dir: "tiles224_v3/"
+  dataset_info: "tile_info224_v3.csv"
   no_data_value: 255
   normalize: true
   augmentation:

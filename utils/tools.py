@@ -29,7 +29,11 @@ def parse_args():
     parser.add_argument(
         "--train_ratio", type=float, default=0.8,
         help="Ratio of training data to total data in random split"
-    )    
+    )
+    parser.add_argument(
+        "--random_seed", type=int, default=2025,
+        help="Initial random seed"
+    )
     parser.add_argument(
         "--overwrite_cfg", type=bool, default=False,
         help="If True, overwrite the config with command-line arguments"
@@ -49,6 +53,7 @@ def overwrite_config(args, cfg):
     cfg['model']['name'] = args.model_name
     cfg['experiment']['gpu_id'] = args.gpu_id
     cfg['data']['split']['random']['train_ratio'] = args.train_ratio
+    cfg['experiment']['seed'] = args.random_seed
     return cfg
 
 

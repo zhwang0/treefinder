@@ -19,11 +19,21 @@ class ClimateSplitDataset(Dataset):
         # Filter by state
         bs = cfg['data']['split']['by_climate']
         test_exc = bs.get('test_exclude_train', False)
+        train_exc = bs.get('train_exclude_test', False)
         
 
         # Fallback: split by filenames (not climates) if val_climate is missing or empty
         if (split in ['train', 'val']) and (not bs.get('val_climate')):
             climates = bs['train_climate']
+            
+            # Check if there are any training climates in the dataset
+            if len(climates) == 0:
+                if train_exc:
+                    # train on ALL except test
+                    climates = [c for c in all_climate if c not in bs['test_climate']]
+                else:
+                    raise ValueError("No training climates found. Please check your configuration.")
+                
             df_train = info[info['ClimateType'].isin(climates)].reset_index(drop=True)
             df_train_split, df_val_split = train_test_split(df_train, test_size=0.1, random_state=cfg['experiment']['seed'])
 
@@ -43,8 +53,7 @@ class ClimateSplitDataset(Dataset):
 
         base = os.path.join(cfg['data']['root_dir'], cfg['data']['dataset_dir'])
         self.paths = [os.path.join(base, row['FileName']) for _, row in df.iterrows()]
-        self.climate_types = df['ClimateType'].tolist()
-        
+        self.df = df        
     
     def __len__(self):
         return len(self.paths)

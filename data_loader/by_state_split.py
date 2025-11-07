@@ -17,10 +17,20 @@ class StateSplitDataset(Dataset):
         # Filter by state
         bs = cfg['data']['split']['by_state']
         test_exc = bs.get('test_exclude_train', False)
-                
+        train_exc = bs.get('train_exclude_test', False)
+        
+        
         # for case of empty validation state
         if (split in ['train', 'val']) and (not bs.get('val_states')):
             full_train_states = bs['train_states']
+            
+            if len(full_train_states) == 0:
+                if train_exc:
+                    # train on ALL except test
+                    full_train_states = [s for s in all_states if s not in bs['test_states']]
+                else:
+                    raise ValueError("No training states found. Please check your configuration.")
+                
             df_train = info[info['State'].isin(full_train_states)].reset_index(drop=True)
             df_train_split, df_val_split = train_test_split(df_train, test_size=0.1, random_state=cfg['experiment']['seed'])
 
@@ -41,6 +51,7 @@ class StateSplitDataset(Dataset):
         base = os.path.join(cfg['data']['root_dir'], cfg['data']['dataset_dir'])
         self.paths = [os.path.join(base, row['FileName']) for _, row in df.iterrows()]
         self.states = df['State'].tolist()
+        self.df = df
         
     
     def __len__(self):
