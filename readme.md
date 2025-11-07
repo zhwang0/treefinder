@@ -1,35 +1,44 @@
-# Dead‐Tree Detection & Segmentation Benchmark
+# 🌲 **TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery**
 
-A flexible PyTorch pipeline for building, training, and evaluating remote‐sensing segmentation models on hand‐labeled “dead tree” tiles across the CONUS. Designed for the NeurIPS 2025 Datasets & Benchmarks track, it supports:
-
-- **Multiple dataset splits** (random 80–10–10, state-based, custom scenarios)  
-- **Consistent tile loading** (RGB, NIR, NDVI bands + no-data mask)  
-- **Data augmentations** (flips + per-tile 90° rotations)  
-- **Config-driven experiments** via a single `configs.yaml`  
-- **Model zoo**: UNet, ViT‐based, SegFormer, DeepLabV3, and TF-ported DeepLabV3+  
-- **Training loop** with masked BCE loss, early stopping, checkpointing, LR schedulers  
-- **Evaluation** of pixel‐level IoU, F1, precision, recall, accuracy under micro/macro averaging and “all” vs “positive_only” scenarios  
-- **Logging & results**: automatic log files, loss-curve plots, and YAML summaries  
+> **Accepted to NeurIPS 2025 (Datasets & Benchmarks Track)**  
+> Benchmarking deep learning models for **individual tree mortality detection** across the contiguous United States (CONUS).
 
 ---
 
+## 🧩 Overview
 
-## 🔍 Benchmark Models
+**TreeFinder** provides a flexible PyTorch-based pipeline for training and evaluating semantic segmentation models on hand-labeled *dead-tree* imagery.  
+It supports **custom dataset splits**, **config-driven experiments**, and **benchmarking under multiple generalization scenarios**, aligned with the official *TreeFinder dataset*.
 
-We benchmark six semantic segmentation models to establish strong baselines for individual-level tree mortality mapping:
+---
 
-| Model           | Type                 | Description |
-|-----------------|----------------------|-------------|
-| **U-Net**       | CNN                  | [📄Paper](https://arxiv.org/abs/1505.04597) Classic encoder–decoder architecture with skip connections. Trained from scratch as a baseline without pretraining. 
-| **DeepLabV3+**  | CNN                  | [📄Paper](https://arxiv.org/abs/1802.02611v3) Uses atrous spatial pyramid pooling with a ResNet-50 backbone. Pretrained on ImageNet.
-| **ViT-Seg**     | Vision Transformer   | [📄Paper](https://arxiv.org/abs/2010.11929) Patch-based transformer with a lightweight transposed-convolution decoder. Pretrained on ImageNet.
-| **SegFormer**   | Vision Transformer   | [📄Paper](https://arxiv.org/abs/2105.15203) Hierarchical transformer with multi-scale feature encoding and an efficient decoder. Pretrained on ADE20K.
-| **Mask2Former** | Vision Transformer   | [📄Paper](https://arxiv.org/abs/2112.01527) Set prediction model using masked attention and a Swin-Tiny backbone. Pretrained on ADE20K.
-| **DOFA**        | Foundation Model     | [📄Paper](https://arxiv.org/abs/2403.15356) Multimodal foundation model pretrained on diverse remote sensing imagery (e.g., Sentinel, NAIP). Adapted for semantic segmentation.
+## 🚀 Features
 
-Each model is trained using consistent hyperparameters and evaluated across multiple generalization scenarios (e.g., cross-region, cross-climate, and cross-forest-type) using TreeFinder.
+- **Multiple dataset splits** — random (80–10–10), state-based, and scenario-driven (climate / forest type)  
+- **Consistent tile loading** — RGB, NIR, NDVI, and no-data mask handling  
+- **Augmentations** — flips and 90° rotations for per-tile diversity  
+- **Config-driven experiments** — all controlled via a single YAML file  
+- **Model zoo** — U-Net, DeepLabV3+, ViT-Seg, SegFormer, Mask2Former, and DOFA  
+- **Robust training loop** — masked BCE loss, early stopping, checkpointing, and LR scheduling  
+- **Comprehensive evaluation** — IoU, F1, precision, recall, accuracy (micro/macro, all vs. positive-only)  
+- **Automated logging** — loss curves, config dumps, and YAML summaries for every run  
 
+---
 
+## 🧠 Benchmark Models
+
+| Model           | Type               | Description |
+|-----------------|--------------------|-------------|
+| **U-Net**       | CNN                | [📄Paper](https://arxiv.org/abs/1505.04597) Classic encoder–decoder architecture with skip connections. Trained from scratch as a baseline. |
+| **DeepLabV3+**  | CNN                | [📄Paper](https://arxiv.org/abs/1802.02611v3) Employs atrous spatial pyramid pooling with a ResNet-50 backbone. |
+| **ViT-Seg**     | Vision Transformer | [📄Paper](https://arxiv.org/abs/2010.11929) Patch-based transformer with a transposed-convolution decoder. |
+| **SegFormer**   | Vision Transformer | [📄Paper](https://arxiv.org/abs/2105.15203) Hierarchical transformer with efficient multi-scale feature fusion. |
+| **Mask2Former** | Vision Transformer | [📄Paper](https://arxiv.org/abs/2112.01527) Set prediction model using masked attention (Swin-T backbone). |
+| **DOFA**        | Foundation Model   | [📄Paper](https://arxiv.org/abs/2403.15356) Multimodal foundation model pretrained on multi-sensor remote-sensing imagery. |
+
+All models are trained with consistent hyperparameters and evaluated under **cross-region**, **cross-climate**, and **cross-forest-type** generalization setups from the *TreeFinder benchmark*.
+
+---
 
 ## 📁 Repository Structure
 
@@ -46,28 +55,49 @@ Each model is trained using consistent hyperparameters and evaluated across mult
 │   ├── by_climate_split.py  
 │   └── by_tree_split.py  
 ├── models/                   # Model factory & builders  
-│   ├── __init__.py
+│   ├── __init__.py  
 │   ├── unet.py  
 │   ├── deeplab.py  
-│   ├── vit.py 
-│   ├── segformer.py 
-│   ├── mask2former.py
-│   └── dofa/             
+│   ├── vit.py  
+│   ├── segformer.py  
+│   ├── mask2former.py  
+│   └── dofa/                 
 ├── exps/                     # Training & evaluation loops  
 │   ├── train.py  
 │   └── evaluate.py  
-└── utils/                    # Misc helpers (logging, config I/O, seed)  
-    └── tools.py 
+└── utils/                    # Misc helpers (logging, config I/O, seed control)  
+    └── tools.py  
 ```
 
-## 🛠️ Configuration
-All hyperparameters and paths live in configs/*.yaml. All test scenarios are also included in configs/.
+---
 
+## ⚙️ Configuration and ▶️ Quickstart
 
-## ▶️ Quickstart
-```
+All experiment parameters (model, optimizer, paths, augmentations, split type) are defined in YAML under `configs/`.  
+For example:
+
+```bash
 python main.py --config configs/debug.yaml
 ```
+
+---
+
+## 📚 Citation
+
+If you use this repository or the **TreeFinder** dataset, please cite:
+
+> **Zhihao Wang**, **Cooper Li**, **Ruichen Wang**, **Lei Ma**, **George Hurtt**, **Xiaowei Jia**, **Gengchen Mai**, **Zhili Li**, **Yiqun Xie**.  
+> *TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery.*  
+> In *Proceedings of the 39th Conference on Neural Information Processing Systems (NeurIPS)*, 2025.
+
+<!-- ```bibtex
+@inproceedings{wang2025treefinder,
+  title     = {TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery},
+  author    = {Wang, Zhihao and Li, Cooper and Wang, Ruichen and Ma, Lei and Hurtt, George and Jia, Xiaowei and Mai, Gengchen and Li, Zhili and Xie, Yiqun},
+  booktitle = {Proceedings of the 39th Conference on Neural Information Processing Systems (NeurIPS 2025), Datasets and Benchmarks Track},
+  year      = {2025}
+}
+``` -->
 
 ## 📬 Contact
 
