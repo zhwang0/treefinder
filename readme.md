@@ -1,7 +1,10 @@
 # 🌲 **TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery**
 
 > **Accepted to NeurIPS 2025 (Datasets & Benchmarks Track)**  
-> Benchmarking deep learning models for **individual tree mortality detection** across the contiguous United States (CONUS).
+
+Benchmarking deep learning models for **individual tree mortality detection** across the contiguous United States (CONUS).
+
+Datasets are available on Kaggle: https://www.kaggle.com/datasets/zhihaow/tree-finder.
 
 ---
 
