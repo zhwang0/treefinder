@@ -4,17 +4,13 @@
 > Project page is available on NeurIPS: https://neurips.cc/virtual/2025/loc/san-diego/poster/121794.
 > Datasets are available on Kaggle: https://www.kaggle.com/datasets/zhihaow/tree-finder.
 
-Benchmarking deep learning models for **individual tree mortality detection** across the contiguous United States (CONUS).
-
-
----
 
 ## 🧩 Overview
 
 **TreeFinder** provides a flexible PyTorch-based pipeline for training and evaluating semantic segmentation models on hand-labeled *dead-tree* imagery.  
 It supports **custom dataset splits**, **config-driven experiments**, and **benchmarking under multiple generalization scenarios**, aligned with the official *TreeFinder dataset*.
 
----
+
 
 ## 🚀 Features
 
@@ -27,7 +23,6 @@ It supports **custom dataset splits**, **config-driven experiments**, and **benc
 - **Comprehensive evaluation** — IoU, F1, precision, recall, accuracy (micro/macro, all vs. positive-only)  
 - **Automated logging** — loss curves, config dumps, and YAML summaries for every run  
 
----
 
 ## 🧠 Benchmark Models
 
@@ -42,7 +37,6 @@ It supports **custom dataset splits**, **config-driven experiments**, and **benc
 
 All models are trained with consistent hyperparameters and evaluated under **cross-region**, **cross-climate**, and **cross-forest-type** generalization setups from the *TreeFinder benchmark*.
 
----
 
 ## 📁 Repository Structure
 
@@ -73,7 +67,6 @@ All models are trained with consistent hyperparameters and evaluated under **cro
     └── tools.py  
 ```
 
----
 
 ## ⚙️ Configuration and ▶️ Quickstart
 
@@ -84,7 +77,6 @@ For example:
 python main.py --config configs/debug.yaml
 ```
 
----
 
 ## 📚 Citation
 
