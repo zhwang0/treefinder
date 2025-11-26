@@ -1,10 +1,9 @@
 # 🌲 **TreeFinder: A US-Scale Benchmark Dataset for Individual Tree Mortality Monitoring Using High-Resolution Aerial Imagery**
 
 > **Accepted to NeurIPS 2025 Datasets & Benchmarks Track**
-
-> Project page is available on NeurIPS: https://neurips.cc/virtual/2025/loc/san-diego/poster/121794.
-
-> Datasets are available on Kaggle: https://www.kaggle.com/datasets/zhihaow/tree-finder.
+> - Paper is available on OpenReview: https://openreview.net/pdf?id=BH2miB6Smc.
+> - Project page is available on NeurIPS: https://neurips.cc/virtual/2025/loc/san-diego/poster/121794.
+> - Datasets are available on Kaggle: https://www.kaggle.com/datasets/zhihaow/tree-finder.
 
 
 ## 🧩 Overview
