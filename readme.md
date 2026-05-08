@@ -3,7 +3,7 @@
 > **Accepted to NeurIPS 2025 Datasets & Benchmarks Track**
 > - **Paper** is available on OpenReview: https://openreview.net/pdf?id=BH2miB6Smc.
 > - **Project page** is available on NeurIPS: https://neurips.cc/virtual/2025/loc/san-diego/poster/121794.
-> - **Datasets** are available on [HuggingFace](https://huggingface.co/datasets/zhwang1/TreeFinder) and [Kaggle](https://www.kaggle.com/datasets/zhihaow/tree-finder).
+> - **Datasets** are available on [Hugging Face](https://huggingface.co/datasets/zhwang1/TreeFinder) and [Kaggle](https://www.kaggle.com/datasets/zhihaow/tree-finder).
 
 
 ## 🧩 Overview
