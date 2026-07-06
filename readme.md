@@ -15,7 +15,7 @@ It supports **custom dataset splits**, **config-driven experiments**, and **benc
 
 ## 🚀 Features
 
-- **Multiple dataset splits** — random (80–10–10), state-based, and scenario-driven (climate / forest type)  
+- **Multiple dataset splits** — random (80–10–10), state-based, and scenario-driven (environmental conditions / forest type)  
 - **Consistent tile loading** — RGB, NIR, NDVI, and no-data mask handling  
 - **Augmentations** — flips and 90° rotations for per-tile diversity  
 - **Config-driven experiments** — all controlled via a single YAML file  
@@ -36,7 +36,7 @@ It supports **custom dataset splits**, **config-driven experiments**, and **benc
 | **Mask2Former** | Vision Transformer | [📄Paper](https://arxiv.org/abs/2112.01527) Set prediction model using masked attention (Swin-T backbone). |
 | **DOFA**        | Foundation Model   | [📄Paper](https://arxiv.org/abs/2403.15356) Multimodal foundation model pretrained on multi-sensor remote-sensing imagery. |
 
-All models are trained with consistent hyperparameters and evaluated under **cross-region**, **cross-climate**, and **cross-forest-type** generalization setups from the *TreeFinder benchmark*.
+All models are trained with consistent hyperparameters and evaluated under **cross-region**, **cross-environmental-condition**, and **cross-forest-type** generalization setups from the *TreeFinder benchmark*.
 
 
 ## 📁 Repository Structure
